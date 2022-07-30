@@ -1,0 +1,13 @@
+html{
+    background-color: #F1CBFE;
+    color: #4A3194;
+    font-size: larger;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    height: 600px;
+}
+.right{
+    margin: auto 0;
+}

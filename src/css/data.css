@@ -1,0 +1,15 @@
+.data_card{
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.20);
+    height: 700px;
+    padding: 20px;
+}
+.back-button{
+    background-color: #4A3194;
+    color: #F1CBFE;
+    border: #4A3194;
+    padding: 12px;
+    font-size: large;
+}
+.card-image{
+    width: 100%;
+}
