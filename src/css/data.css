@@ -1,6 +1,6 @@
 .data_card{
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.20);
-    height: 700px;
+    height: 900px;
     padding: 20px;
 }
 .back-button{
@@ -9,7 +9,9 @@
     border: #4A3194;
     padding: 12px;
     font-size: large;
+    margin-bottom: 20px;
 }
 .card-image{
     width: 100%;
+    height: 250px;
 }

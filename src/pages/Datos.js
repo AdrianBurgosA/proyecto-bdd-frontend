@@ -14,6 +14,9 @@ import '../css/data.css';
 
 const Datos = () => {
     const [datos, setDatos] = useState([])
+    const [sintomas, setSintomas] = useState([])
+    const [proteger, setProteger] = useState([])
+    const datosAux = []
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,21 +29,60 @@ const Datos = () => {
         }
         fetchData()
     },[])
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                const response = await api.get('/getSintomas')
+                setSintomas(response.data)
+            }catch(err){
+                console.log(err)
+            }
+        }
+        fetchData()
+    },[])
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                const response = await api.get('/getProteger')
+                setProteger(response.data)
+            }catch(err){
+                console.log(err)
+            }
+        }
+        fetchData()
+    },[])
+    
+    const getSintomas = (id) => {
+        for(var i = 0; i < sintomas.length; i++){
+            if((id-1) === i){
+                return sintomas[i].sintomas;
+            }
+        }
+    }
+    
+    const getProteger = (id) => {
+        for(var i = 0; i < proteger.length; i++){
+            if((id-1) === i){
+                return proteger[i].proteger;
+            }
+        }
+    }
 
     return(
         <>
             <center>
                 <h1>CIBERRIESGOS</h1>
-
                 <Box sx={{ flexGrow: 3 }}>
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         {
                             datos.map(d =>
                                 <Grid item xs={4}>
-                                    <Card sx={{maxWidth: 500, maxHeight: 500}} class="data_card">
-                                        <img class="card-image" src={d.link} width="300"/>
+                                    <Card sx={{maxWidth: 400, maxHeight: 1000}} class="data_card">
+                                        <img class="card-image" src={d.img} width="100" height="100"/>
                                         <b><Typography class="card-title" variant="h5" component="div">
-                                            {d.titulo}
+                                            {d.name}
                                         </Typography></b>
                                         <CardContent>
                                             <Table sx={{ minWidth: 400}} size="small">
@@ -48,43 +90,47 @@ const Datos = () => {
                                                     <TableRow >
                                                         <TableCell sx={{borderBottom: 0 }}>
                                                             <Typography variant="p" component="div">
-                                                                Definición:
+                                                                <b>Definición:</b>
                                                             </Typography>
                                                         </TableCell>
                                                         <TableCell sx={{borderBottom: 0 }}>
                                                             <Typography variant="p" component="div">
-                                                                {d.definicion}
+                                                                {d.def}
                                                             </Typography>
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell sx={{borderBottom: 0 }}>
                                                             <Typography variant="p">
-                                                                Como reconocerlo:
+                                                                <b>Como reconocerlo:</b>
                                                             </Typography>
                                                         </TableCell>
                                                         <TableCell sx={{borderBottom: 0 }}>
                                                             <Typography variant="p" component="div">
-                                                                {d.reconocer}
+                                                                {d.sintomas.map(p =>
+                                                                    <p> - {getSintomas(p)}</p>    
+                                                                )}
                                                             </Typography>
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell sx={{borderBottom: 0 }}>
                                                             <Typography variant="p" component="div">
-                                                                Como protegerlo:
+                                                                <b>Como protegerlo:</b>
                                                             </Typography>
                                                         </TableCell>
                                                         <TableCell sx={{borderBottom: 0 }}>
                                                             <Typography variant="p" component="div">
-                                                                {d.proteger}
+                                                                {d.proteger.map(p =>
+                                                                    <p>- {getProteger(p)}</p>    
+                                                                )}
                                                             </Typography>
                                                         </TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
                                         </CardContent>
-                                        <iframe width="350" height="200" src={d.link_video} title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                                        <iframe width="400" height="250" src={d.video} title="YouTube video player" frameborder="0" allowfullscreen></iframe>
                                     </Card>
                                 </Grid>
                             )
